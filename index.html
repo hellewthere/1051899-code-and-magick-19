@@ -189,6 +189,7 @@ var wizardWidth = 70;
 var WIZARD_COFF = 1.337;
 var playingFieldWidth = width * 1/2;
 var halfWizardWidth = wizardWidth * 1/2;
+var windowTwoThirdHeight = height * 2/3;
 
 var getFireballSpeed = function (left) {
 if (left) {
@@ -206,7 +207,7 @@ return playingFieldWidth - halfWizardWidth;
 };
 
 var getWizardY = function (height) {
-return height * 2/3;
+return windowTwoThirdHeight - getWizardHeight;
 };
 
 </script>
