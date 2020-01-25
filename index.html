@@ -200,8 +200,9 @@ if (left) {
 };
 
 var getWizardHeight = function (WIZARD_COFF, wizardWidth) {
-return Math.round(WIZARD_COFF * wizardWidth);
+return WIZARD_COFF * wizardWidth;
 };
+
 var getWizardX = function (width) {
 return playingFieldWidth - halfWizardWidth;
 };
