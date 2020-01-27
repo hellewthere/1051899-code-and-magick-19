@@ -176,28 +176,24 @@
         var wizardSpeed = 3;
         var wizardWidth = 70;
         var WIZARD_COFF = 1.337;
-        var playingFieldWidth = width * 1/2;
-        var halfWizardWidth = wizardWidth * 1/2;
-        var windowTwoThirdHeight = height * 2/3;
 
         var getFireballSpeed = function(left) {
-            if (left) {
-                return 5;
-            } else {
-                return 2;
-            }
+            return left ? 5 : 2;
         };
 
-        var getWizardHeight = function(WIZARD_COFF, wizardWidth) {
+        var getWizardHeight = function(wizardWidth) {
             return WIZARD_COFF * wizardWidth;
         };
 
-        var getWizardX = function(playingFieldWidth, halfWizardWidth) {
-            return playingFieldWidth - halfWizardWidth;
+        var getWizardX = function(width) {
+            var halfFieldWidth = width / 2;
+            var halfWizardWidth = wizardWidth / 2;
+            return halfFieldWidth - halfWizardWidth;
         };
 
-        var getWizardY = function(windowTwoThirdHeight, getWizardHeight) {
-            return windowTwoThirdHeight - getWizardHeight;
+        var getWizardY = function(height) {
+            var windowTwoThirdHeight = height * 2/3;
+            return windowTwoThirdHeight - getWizardHeight(wizardWidth);
         };
     </script>
     <script src="js/game.js"></script>
