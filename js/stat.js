@@ -8,13 +8,13 @@ var GAP = 10;
 var TITLE_COLOR = '#000';
 var TITLE_FONT = '16px PT Mono';
 var TITLE_TEXT = 'Ура вы победили! \nСписок результатов:';
-var RANDOM_COLOR= generateColor();
 // цвета облака
 var shadow = 'rgba(0, 0, 0, 0.7)';
 var white = '#fff';
 var BLOCK_X = CLOUD_X + GAP;
 var BLOCK_WIDTH = 40;
 var BLOCK_HEIGHT = 150;
+
 
 var drawCloud = function (ctx) {
   ctx.fillStyle = white;
@@ -37,27 +37,23 @@ var renderTitle = function (ctx, x, y, text, color, font) {
   ctx.fillText(text, x, y);
 };
 
-var renderBlocks = function (ctx, x, y, RANDOM_COLOR, names, times)
+var renderBlocks = function (ctx, names, times) {
+  window.console.log(names);
+  window.console.log(times);
+  fillBlocks();
 
-window.renderStatistics = function (ctx) {
-  renderCloud(ctx);
-  renderTitle(ctx, 130, 50, TITLE_TEXT, TITLE_COLOR, TITLE_FONT);
-  renderBlocks(ctx, BLOCK_X, BLOCK_WIDTH, RANDOM_COLOR);
+  var maxTime = getMaxElement(times);
+
+  console.log(names);
+  console.log(times);
+  console.log(maxTime);
 };
 
-var names = [
-  "Вы",
-  "Кекс",
-  "Катя",
-  "Игорь",
-];
-
-var times = [
-  "2725",
-  "4025",
-  "1244",
-  "1339",
-];
+window.renderStatistics = function (ctx, names, times) {
+  renderCloud(ctx);
+  renderTitle(ctx, 130, 50, TITLE_TEXT, TITLE_COLOR, TITLE_FONT);
+  renderBlocks(ctx, names, times);
+};
 
 // найти максимальное значение массива times
 var getMaxElement = function (arr) {
@@ -72,10 +68,12 @@ var getMaxElement = function (arr) {
   return maxElement;
 };
 
-// функция рандомного цвета js
-function generateColor() {
-  return '#' + Math.floor(Math.random()*16777215).toString(16)
+// ищем цвет блока в зависимости от имени
+function fillBlocks(ctx, namePlayer) {
+  var randomOpacity = Math.random().toFixed(2);
+  if (namePlayer === 'Вы') {
+    ctx.fillStyle = 'rgba(255, 0, 0, 1)';
+  } else {
+    ctx.fillStyle = 'rgba(0, 0, 255, ' + randomOpacity + ')';
+  }
 }
-
-
-
