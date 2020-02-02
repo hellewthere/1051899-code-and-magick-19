@@ -17,16 +17,15 @@ var shadow = 'rgba(0, 0, 0, 0.7)';
 var white = '#fff';
 var blockColor = 'rgba(255, 0, 0, 1)';
 
-// вспомогательные параметры
-var GAP = 10;
-var OFFSET = BLOCK_WIDTH + 50;
-
 // параметры блока
 var BLOCK_X = 160;
 var BLOCK_Y = 240;
 var BLOCK_WIDTH = 40;
 var BLOCK_HEIGHT = -150;
 
+// вспомогательные параметры
+var GAP = 10;
+var OFFSET = BLOCK_WIDTH + 50;
 
 var renderCloud = function (ctx) {
   drawShadow(ctx);
@@ -50,11 +49,17 @@ var renderTitle = function (ctx) {
   ctx.fillText(TITLE_MSG, 130, 40);
 };
 
-// отрисовать гистограмму
-window.renderStatistics = function (ctx, names, times) {
-  renderCloud(ctx);
-  renderTitle(ctx);
-  renderBlocks(ctx, names, times);
+// найти максимальное значение массива times
+var getMaxElement = function (arr) {
+  var maxElement = arr[0];
+
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i] > maxElement) {
+      maxElement = arr[i];
+    }
+  }
+
+  return maxElement;
 };
 
 var renderBlocks = function (ctx, names, times) {
@@ -71,19 +76,6 @@ var renderBlocks = function (ctx, names, times) {
   }
 };
 
-// найти максимальное значение массива times
-var getMaxElement = function (arr) {
-  var maxElement = arr[0];
-
-  for (var i = 0; i < arr.length; i++) {
-    if (arr[i] > maxElement) {
-      maxElement = arr[i];
-    }
-  }
-
-  return maxElement;
-};
-
 // функция рандомного цвета
 var getRandomColor = function () {
   var str1 = 'rgba(0, 0, 255,';
@@ -91,3 +83,38 @@ var getRandomColor = function () {
   var str3 = ')';
   return str1 + str2 + str3;
 };
+
+var renderNames = function (ctx, names) {
+  ctx.font = TITLE_FONT;
+  ctx.fillStyle = TITLE_COLOR;
+  ctx.fillText(names[0], BLOCK_X, 260);
+
+  for (var i = 0; i < names.length; i++) {
+    ctx.fillText(names[i], BLOCK_X + OFFSET * i, BLOCK_Y + 20);
+  }
+};
+
+var renderTimes = function (ctx, times) {
+
+  var maxTime = getMaxElement(times);
+
+  ctx.font = TITLE_FONT;
+  ctx.fillStyle = TITLE_COLOR;
+  ctx.fillText(times[0], 130, 120);
+
+  for (var i = 0; i < times.length; i++) {
+    var time = Math.round(times[i]);
+    ctx.fillText(time, BLOCK_X + OFFSET * i, BLOCK_Y + (BLOCK_HEIGHT * time) / maxTime;
+    );
+};
+
+// отрисовать гистограмму
+window.renderStatistics = function (ctx, names, times) {
+  renderCloud(ctx);
+  renderTitle(ctx);
+  renderBlocks(ctx, names, times);
+  renderNames(ctx, names);
+  renderTimes(ctx, times);
+};
+
+
