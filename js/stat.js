@@ -87,7 +87,7 @@ var getRandomColor = function () {
 var renderNames = function (ctx, names) {
   ctx.font = TITLE_FONT;
   ctx.fillStyle = TITLE_COLOR;
-  ctx.fillText(names[0], BLOCK_X, 260);
+  // ctx.fillText(names[0], BLOCK_X, 260);
 
   for (var i = 0; i < names.length; i++) {
     ctx.fillText(names[i], BLOCK_X + OFFSET * i, BLOCK_Y + 20);
@@ -100,12 +100,12 @@ var renderTimes = function (ctx, times) {
 
   ctx.font = TITLE_FONT;
   ctx.fillStyle = TITLE_COLOR;
-  ctx.fillText(times[0], 130, 120);
+  // ctx.fillText(times[0], 130, 120);
 
   for (var i = 0; i < times.length; i++) {
     var time = Math.round(times[i]);
-    ctx.fillText(time, BLOCK_X + OFFSET * i, BLOCK_Y + (BLOCK_HEIGHT * time) / maxTime;
-    );
+    ctx.fillText(time, BLOCK_X + OFFSET * i, BLOCK_Y - GAP + (BLOCK_HEIGHT * time) / maxTime);
+  }
 };
 
 // отрисовать гистограмму
