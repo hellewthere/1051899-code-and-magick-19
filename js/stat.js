@@ -9,8 +9,9 @@ var CLOUD_Y = 10;
 // параметры текста
 var TITLE_COLOR = '#000';
 var TITLE_FONT = '16px PT Mono';
-var TITLE_TEXT = 'Ура вы победили!';
 var TITLE_MSG = 'Список результатов:';
+var TITLE_TEXT = 'Ура вы победили!';
+
 
 // параметры цвета
 var shadow = 'rgba(0, 0, 0, 0.7)';
@@ -45,8 +46,8 @@ var drawShadow = function (ctx) {
 var renderTitle = function (ctx) {
   ctx.font = TITLE_FONT;
   ctx.fillStyle = TITLE_COLOR;
-  ctx.fillText(TITLE_TEXT, 130, 60);
-  ctx.fillText(TITLE_MSG, 130, 40);
+  ctx.fillText(TITLE_MSG, 130, 60);
+  ctx.fillText(TITLE_TEXT, 130, 40);
 };
 
 // найти максимальное значение массива times
