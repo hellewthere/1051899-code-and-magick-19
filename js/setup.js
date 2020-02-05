@@ -42,11 +42,12 @@ var createPeopleData = function () {
   return data;
 };
 
-/*
+
 var myFriends = createPeopleData();
 
+// eslint-disable-next-line no-console
 console.log(myFriends);
-*/
+
 
 for (var i = 0; i < 4; i++) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
@@ -60,6 +61,7 @@ for (var i = 0; i < 4; i++) {
 
   // Отрисуйте сгенерированные DOM-элементы в блок .setup-similar-list.
   // Для вставки элементов используйте DocumentFragment.
+  // eslint-disable-next-line no-unused-vars
   var fragment = document.createDocumentFragment('.setup-similar-list');
 
   similarListElement.appendChild(wizardElement);
