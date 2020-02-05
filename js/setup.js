@@ -11,53 +11,50 @@ var names = ['Иван', 'Хуан Себастьян', 'Мария', 'Крис�
 var surnames = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 
 var coatColors = [
-  'rgb (101, 137, 164)',
-  'rgb (241, 43, 107)',
-  'rgb (147, 100, 161)',
-  'rgb (56, 159, 117)',
-  'rgb (215, 210, 55)',
-  'rgb (0, 0, 0)',
+  'rgb(101, 137, 164)',
+  'rgb(241, 43, 107)',
+  'rgb(147, 100, 161)',
+  'rgb(56, 159, 117)',
+  'rgb(215, 210, 55)',
+  'rgb(0, 0, 0)',
 ];
 var eyesColors = ['black', 'red', 'blue', 'yellow', 'green'];
 
-var createPerson = function () {
-  var personObj = {
+var createWizard = function () {
+  var wizardObj = {
     name: names[Math.floor(Math.random() * names.length)],
     surname: surnames[Math.floor(Math.random() * surnames.length)],
     coatColor: coatColors[Math.floor(Math.random() * coatColors.length)],
     eyesColor: eyesColors[Math.floor(Math.random() * eyesColors.length)]
   };
 
-  return personObj;
+  return wizardObj;
 };
 
-var createPeopleData = function () {
+var renderWizardsData = function () {
   var data = [];
 
   for (var i = 0; i < 4; i++) {
-    var person = createPerson();
-    data.push(person);
+    var wizard = createWizard();
+    data.push(wizard);
   }
 
   return data;
 };
 
 
-var myFriends = createPeopleData();
-
-// eslint-disable-next-line no-console
-console.log(myFriends);
+var myWizards = renderWizardsData();
 
 
-for (var i = 0; i < 4; i++) {
+for (var i = 0; i < myWizards.length; i++) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
-
+  console.log(myWizards[i]);
   // На основе данных, созданных в предыдущем пункте и шаблона #similar-wizard-template
   // создайте DOM-элементы, соответствующие случайно сгенерированным волшебникам, и заполните
   // их данными из массива
-  wizardElement.querySelector('.setup-similar-label').textContent = names[i];
-  wizardElement.querySelector('.wizard-coat').fill = coatColors[i];
-  wizardElement.querySelector('.wizard-eyes').fill = eyesColors[i];
+  wizardElement.querySelector('.setup-similar-label').textContent = myWizards[i].name + ' ' + myWizards[i].surname;
+  wizardElement.querySelector('.wizard-coat').style.fill = myWizards[i].coatColor;
+  wizardElement.querySelector('.wizard-eyes').style.fill = myWizards[i].eyesColor;
 
   // Отрисуйте сгенерированные DOM-элементы в блок .setup-similar-list.
   // Для вставки элементов используйте DocumentFragment.
