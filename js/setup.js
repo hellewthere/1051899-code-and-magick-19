@@ -9,6 +9,12 @@ var fireballColors = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 var ESC_KEY = 'Escape';
 var ENTER_KEY = 'Enter';
 
+var setupWizard = document.querySelector('.setup-wizard');
+var setupPlayer = document.querySelector('.setup-player');
+var wizardCoat = document.querySelector('.wizard-coat');
+var wizardEyes = document.querySelector('.wizard-eyes');
+var wizardFireball = document.querySelector('.setup-fireball-wrap');
+
 var getRandomElement = function (arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 };
@@ -71,23 +77,37 @@ showPopup();
 var popupSetup = document.querySelector('.setup');
 var popupBtnOpen = document.querySelector('.setup-open');
 var popupBtnClose = document.querySelector('.setup-close');
-var userAvatarFocus = document.querySelector('.setup-open-icon');
-var inputNameFocus = document.querySelector('.setup-user-name');
+var userAvatar = document.querySelector('.setup-open-icon');
+var inputName = document.querySelector('.setup-user-name');
+var submitBtn = document.querySelector('.setup-submit');
+
+var utilsEsc = {
+  isEscEvent: function (evt, action) {
+    if (evt.key === ESC_KEY) {
+      action();
+    }
+  }
+};
+
+var utilsEnter = {
+  isEnterEvent: function (evt, action) {
+    if (evt.key === ENTER_KEY) {
+      action();
+    }
+  }
+};
 
 var onPopupEscPress = function (evt) {
-  if (evt.key === ESC_KEY) {
-    closePopup();
-  }
+  utilsEsc.isEscEvent(evt, closePopup);
+};
+
+var onPopupEnterPress = function (evt) {
+  utilsEnter.isEnterEvent(evt, openPopup);
 };
 
 var openPopup = function () {
   popupSetup.classList.remove('hidden');
   document.addEventListener('keydown', onPopupEscPress);
-};
-
-var closePopup = function () {
-  popupSetup.classList.add('hidden');
-  document.removeEventListener('keydown', onPopupEscPress);
 };
 
 popupBtnOpen.addEventListener('click', function () {
@@ -98,72 +118,61 @@ popupBtnClose.addEventListener('click', function () {
   closePopup();
 });
 
+// * Когда окно настройки персонажа открыто, нажатие
+// на клавишу ESC должно закрывать диалог
+var closePopup = function () {
+  popupSetup.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+// *Если фокус находится на форме ввода имени, то окно закрываться не должно.
+inputName.addEventListener('focus', function () {
+  document.removeEventListener('keydown', onPopupEscPress);
+});
+
+inputName.addEventListener('blur', function () {
+  document.addEventListener('keydown', onPopupEscPress);
+});
+
+userAvatar.addEventListener('focus', function () {
+  document.removeEventListener('keydown', onPopupEscPress);
+});
+
+userAvatar.addEventListener('blur', function () {
+  document.addEventListener('keydown', onPopupEscPress);
+});
+
 popupBtnOpen.addEventListener('keydown', function (evt) {
   if (evt.key === ENTER_KEY) {
     openPopup();
   }
 });
 
+// * Если окно открыто и фокус находится на кнопке закрытия окна,
+// то нажатие клавиши ENTER должно приводить к закрытию диалога
 popupBtnClose.addEventListener('keydown', function (evt) {
   if (evt.key === ENTER_KEY) {
     closePopup();
   }
 });
-/*
-popupBtnOpen.addEventListener('keydown', function (evt) {
-  if (evt.key === ENTER_KEY) {
-    popupSetup.classList.remove('hidden');
-  }
+
+// Кнопка "Сохранить"
+// * Если диалог открыт, нажатие на кнопку «Сохранить» приводит к отправке формы
+submitBtn.addEventListener.submit('click', function () {
+  // ?
+});
+// * Если диалог открыт и фокус находится на кнопке «Сохранить», нажатие на ENTER приводит к отправке формы
+submitBtn.addEventListener.submit('focus', function () {
+  document.addEventListener('keydown', onPopupEnterPress);
 });
 
-popupBtnClose.addEventListener('keydown', function (evt) {
-  if (evt.key === ENTER_KEY) {
-    popupSetup.classList.add('hidden');
-  }
-});
-*/
-
-// По клику установим фокус инпуту:
-inputNameFocus.addEventListener('keydown', function (evt) {
-  inputNameFocus.focus(evt.key === ENTER_KEY);
-});
-
-// По клику уберем фокус инпуту:
-inputNameFocus.addEventListener('keydown', function (evt) {
-  inputNameFocus.blur(evt.key === ESC_KEY);
-});
-
-userAvatarFocus.addEventListener('keydown', function (evt) {
-  inputNameFocus.focus(evt.key === ENTER_KEY);
-});
-
-// По клику на кнопку blur уберем фокус инпуту:
-userAvatarFocus.addEventListener('keydown', function (evt) {
-  inputNameFocus.blur(evt.key === ESC_KEY);
-});
-
-
-/*
-userAvatarFocus.addEventListener('onfocus', function (evt) {
-  if (evt.key === ENTER_KEY) {
-    openPopup();
-  }
-});
-
-inputNameFocus.addEventListener('onfocus', function (evt) {
-  if (evt.key === ENTER_KEY) {
-    openPopup();
-  }
-});
-*/
+// 2 Валидация ввода имени персонажа
+// Имя персонажа вводится в поле .setup-user-name. Добавьте следующие ограничения:
+// - имя персонажа не может содержать менее 2 символов;
+// - максимальная длина имени персонажа — 25 символов.
+// index.html 73 строка
 
 // 3,4,5 Изменение цвета глаз, фаербола, мантии по клику
-
-var setupWizard = document.querySelector('.setup-wizard');
-var setupPlayer = document.querySelector('.setup-player');
-var wizardCoat = document.querySelector('.wizard-coat');
-var wizardEyes = document.querySelector('.wizard-eyes');
-var wizardFireball = document.querySelector('.setup-fireball-wrap');
 
 wizardCoat.addEventListener('click', function () {
   var wizardCoatColor = getRandomElement(coatColors);
