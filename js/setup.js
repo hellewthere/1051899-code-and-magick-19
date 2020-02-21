@@ -69,40 +69,28 @@ var showPopup = function () {
   document.querySelector('.setup-similar').classList.remove('hidden');
 };
 
-renderWizards(myWizards);
-showPopup();
-
 // 8. Учебный проект: одеть Надежду
 // Открытие/закрытие окна настройки персонажа:
 var popupSetup = document.querySelector('.setup');
 var popupBtnOpen = document.querySelector('.setup-open');
 var popupBtnClose = document.querySelector('.setup-close');
-var userAvatar = document.querySelector('.setup-open-icon');
 var inputName = document.querySelector('.setup-user-name');
-var submitBtn = document.querySelector('.setup-submit');
 
-var utilsEsc = {
-  isEscEvent: function (evt, action) {
+var keyboard = {
+  isEscEvent: function (evt, callback) {
     if (evt.key === ESC_KEY) {
-      action();
+      callback();
     }
-  }
-};
-
-var utilsEnter = {
-  isEnterEvent: function (evt, action) {
+  },
+  isEnterEvent: function (evt, callback) {
     if (evt.key === ENTER_KEY) {
-      action();
+      callback();
     }
   }
 };
 
 var onPopupEscPress = function (evt) {
-  utilsEsc.isEscEvent(evt, closePopup);
-};
-
-var onPopupEnterPress = function (evt) {
-  utilsEnter.isEnterEvent(evt, openPopup);
+  keyboard.isEscEvent(evt, closePopup);
 };
 
 var openPopup = function () {
@@ -134,61 +122,36 @@ inputName.addEventListener('blur', function () {
   document.addEventListener('keydown', onPopupEscPress);
 });
 
-userAvatar.addEventListener('focus', function () {
-  document.removeEventListener('keydown', onPopupEscPress);
-});
-
-userAvatar.addEventListener('blur', function () {
-  document.addEventListener('keydown', onPopupEscPress);
-});
-
 popupBtnOpen.addEventListener('keydown', function (evt) {
-  if (evt.key === ENTER_KEY) {
-    openPopup();
-  }
+  keyboard.isEnterEvent(evt, openPopup);
 });
 
 // * Если окно открыто и фокус находится на кнопке закрытия окна,
 // то нажатие клавиши ENTER должно приводить к закрытию диалога
 popupBtnClose.addEventListener('keydown', function (evt) {
-  if (evt.key === ENTER_KEY) {
-    closePopup();
-  }
+  keyboard.isEscEvent(evt, closePopup);
 });
 
-// Кнопка "Сохранить"
-// * Если диалог открыт, нажатие на кнопку «Сохранить» приводит к отправке формы
-submitBtn.addEventListener.submit('click', function () {
-  // ?
-});
-// * Если диалог открыт и фокус находится на кнопке «Сохранить», нажатие на ENTER приводит к отправке формы
-submitBtn.addEventListener.submit('focus', function () {
-  document.addEventListener('keydown', onPopupEnterPress);
-});
+var colorizeElements = function () {
+  wizardCoat.addEventListener('click', function () {
+    var wizardCoatColor = getRandomElement(coatColors);
+    setupWizard.querySelector('.wizard-coat').style.fill = wizardCoatColor;
+    setupPlayer.querySelector('input[name=coat-color]').value = wizardCoatColor;
+  });
 
-// 2 Валидация ввода имени персонажа
-// Имя персонажа вводится в поле .setup-user-name. Добавьте следующие ограничения:
-// - имя персонажа не может содержать менее 2 символов;
-// - максимальная длина имени персонажа — 25 символов.
-// index.html 73 строка
+  wizardEyes.addEventListener('click', function () {
+    var wizardEyesColor = getRandomElement(eyesColors);
+    setupWizard.querySelector('.wizard-eyes').style.fill = wizardEyesColor;
+    setupPlayer.querySelector('input[name=eyes-color]').value = wizardEyesColor;
+  });
 
-// 3,4,5 Изменение цвета глаз, фаербола, мантии по клику
+  wizardFireball.addEventListener('click', function () {
+    var wizardFireballColor = getRandomElement(fireballColors);
+    setupPlayer.querySelector('.setup-fireball-wrap').style.background = wizardFireballColor;
+    setupPlayer.querySelector('input[name=fireball-color]').value = wizardFireballColor;
+  });
+};
 
-wizardCoat.addEventListener('click', function () {
-  var wizardCoatColor = getRandomElement(coatColors);
-  setupWizard.querySelector('.wizard-coat').style.fill = wizardCoatColor;
-  setupPlayer.querySelector('input[name=coat-color]').value = wizardCoatColor;
-});
-
-wizardEyes.addEventListener('click', function () {
-  var wizardEyesColor = getRandomElement(eyesColors);
-  setupWizard.querySelector('.wizard-eyes').style.fill = wizardEyesColor;
-  setupPlayer.querySelector('input[name=eyes-color]').value = wizardEyesColor;
-});
-
-wizardFireball.addEventListener('click', function () {
-  var wizardFireballColor = getRandomElement(fireballColors);
-  setupPlayer.querySelector('.setup-fireball-wrap').style.background = wizardFireballColor;
-  setupPlayer.querySelector('input[name=fireball-color]').value = wizardFireballColor;
-});
-
+renderWizards(myWizards);
+showPopup();
+colorizeElements();
